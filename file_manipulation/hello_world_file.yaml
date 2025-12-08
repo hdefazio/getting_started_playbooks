@@ -1,0 +1,18 @@
+---
+- name: Write 'hello world' to a file and print the file contents
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    target_fp: "/tmp/hello_world.txt"
+
+  tasks:
+    - name: Write 'hello world' to a file
+      ansible.builtin.copy:
+        content: "Hello world!"
+        dest: "{{ target_fp }}"
+        mode: '0644' # rw-r--r--
+
+    - name: Print the file contents
+      ansible.builtin.debug:
+        msg: "File Contents: {{ lookup('ansible.builtin.file', target_fp) }}"
