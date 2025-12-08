@@ -1,0 +1,36 @@
+---
+- name: Read a dictionary from a file, then edit the dictionary and save the changes
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    target_fp: "basic_sample_data.json"
+
+  tasks:
+    - name: Read the dictionary from a file
+      ansible.builtin.include_vars:
+        file: "{{ target_fp }}"
+        name: data
+
+    - name: Print the dictionary
+      ansible.builtin.debug:
+        msg: "The dictionary contents is: {{ data }}"
+
+    - name: Add a value to the dictionary
+      ansible.builtin.set_fact:
+        data: "{{ data | combine({'pears': 1}) }}"
+
+    - name: Edit a value in the dictionary
+      ansible.builtin.set_fact:
+        data: "{{ data | combine({'oranges': 10}) }}"
+
+    - name: Print the dictionary
+      ansible.builtin.debug:
+        msg: "The dictionary contents is: {{ data }}"
+
+    - name: Write the updated dictionary back to the file
+      ansible.builtin.copy:
+        # Use the to_nice_json filter to convert the Python dict to formatted JSON string
+        content: "{{ data | to_nice_json }}"
+        dest: "{{ target_fp }}"
+        mode: '0644' # rw-r--r--
