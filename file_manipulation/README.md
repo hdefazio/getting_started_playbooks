@@ -1,5 +1,5 @@
-# 📄 Hello World File Creation
-## 📝 Playbook Purpose
+# 📄 Hello World File Creation: `hello_world_file.yaml`
+## Playbook Purpose
 This playbook writes the text "Hello world!" to a file named /tmp/hello_world.txt on the target host(s).
 
 Key Concepts Demonstrated:
@@ -16,7 +16,7 @@ Key Concepts Demonstrated:
 ## 🚀 How to Run the Playbook
 ```$ ansible-playbook hello_world_file.yaml```
 
-## Verify the results
+### Verify the results
 Check the file permissions
 `$ ls -l /tmp/hello_world.txt`
 Expected Permissions: `-rw-r--r--`
