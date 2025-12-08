@@ -1,0 +1,40 @@
+---
+- name: Create a shopping list from a recipe book (nested dictionary)
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    source_fp: "recipe_book.json"
+    recipes_to_make:
+      - "Pancakes"
+      - "Tomato Soup"
+
+  tasks:
+    - name: Read the dictionary from the file
+      ansible.builtin.include_vars:
+        file: "{{ source_fp }}"
+        name: recipe_book
+
+    - name: Gather the needed ingredients in one list
+      # 1. Takes the list of recipes, recipes_to_make
+      # 2. map(extract): Iterates over the items in recipes_to_make as a key to extract the corresponding dict from recipe_book
+      # 3. map(list): Extracts only the keys (ingredient names) for each dict from step 2
+      # 4. flatten: Flattens the resulting list of lists from step 3 into a single list
+      ansible.builtin.set_fact:
+        final_shopping_list: >
+          {{ recipes_to_make
+             | map('extract', recipe_book)
+             | map('list')
+             | flatten
+          }}
+
+    - name: Store the final shopping list in a var
+      ansible.builtin.set_fact:
+        final_report:
+          Recipe_Names: "{{ recipes_to_make }}"
+          Ingredients_List: "{{ final_shopping_list }}"
+          Notes: "Total items: {{ final_shopping_list | length }}"
+
+    - name: Display the final report
+      ansible.builtin.debug:
+        var: final_report

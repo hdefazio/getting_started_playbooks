@@ -1,0 +1,20 @@
+{
+    "Pancakes": {
+        "Flour": "1.5 cups",
+        "Milk": "1 cup",
+        "Egg": "1 large",
+        "Baking Powder": "2 tsp"
+    },
+    "Simple Guacamole": {
+        "Avocado": "2 large",
+        "Lime Juice": "1 tbsp",
+        "Red Onion": "1/4 cup",
+        "Salt": "1/2 tsp"
+    },
+    "Tomato Soup": {
+        "Canned Tomatoes": "28 oz",
+        "Vegetable Broth": "4 cups",
+        "Onion": "1 medium",
+        "Cream": "1/2 cup"
+    }
+}
