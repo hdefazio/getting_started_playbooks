@@ -11,7 +11,7 @@
       ansible.builtin.copy:
         content: "Hello world!"
         dest: "{{ target_fp }}"
-        mode: '0644' # rw-r--r--
+        mode: u=rw,g=r,o=r
 
     - name: Print the file contents
       ansible.builtin.debug:
