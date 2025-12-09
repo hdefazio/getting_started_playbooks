@@ -1,0 +1,24 @@
+- name: Gather the host's information using facts and save to a new file using a template
+  hosts: localhost
+  become: false
+  gather_facts: true
+  vars:
+    target_dir: /tmp/ansible_facts
+    target_fp: "{{ target_dir }}/{{ ansible_hostname }}_facts.txt"
+
+  tasks:
+    - name: Create a directory to store the system fact files
+      ansible.builtin.file:
+        state: directory
+        recurse: true
+        path: "{{ target_dir }}"
+
+    - name: Create a file containing facts about the host using a template
+      ansible.builtin.template:
+        src: system_facts_template.j2
+        dest: "{{ target_fp }}"
+        mode: u=rw,g=r,o=r
+
+    - name: Print the system fact file
+      ansible.builtin.debug:
+        msg: "File contents: {{ lookup('ansible.builtin.file', target_fp) }}"
