@@ -1,0 +1,23 @@
+- name: Install cowsay on the hosts
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Install cowsay on the host
+      ansible.builtin.package:
+        name: cowsay
+        state: present
+      become: true
+      become_user: root
+
+    - name: Run cowsay
+      ansible.builtin.command: cowsay "hello!"
+      register: cowsay_hello
+      changed_when: false # this did not modify the configuration of the system, so report it as ok
+
+    - name: Print cowsay command output
+      ansible.builtin.debug:
+        # Using stdout_lines instead of stdout for a more legible output
+        var: cowsay_hello.stdout_lines
+      when: cowsay_hello.failed is false
