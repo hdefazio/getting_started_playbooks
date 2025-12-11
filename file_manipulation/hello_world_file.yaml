@@ -15,4 +15,6 @@
 
     - name: Print the file contents
       ansible.builtin.debug:
+        # The lookup plugin only executes on the controller
+        # This works because our host (localhost) is the same as the controller
         msg: "File Contents: {{ lookup('ansible.builtin.file', target_fp) }}"

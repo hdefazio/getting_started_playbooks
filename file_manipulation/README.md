@@ -7,7 +7,7 @@ Key Concepts Demonstrated:
 
 - Module Use: Utilizing the `ansible.builtin.copy` module with the content parameter to manage file contents directly.
 
-- Lookup Plugin: Using `ansible.builtin.file` (via the `lookup` function) to read the file's content back to the control node for verification.
+- Lookup Plugin: Using `ansible.builtin.file` (via the `lookup` function) to read the file's content from the Control Node's local filesystem for verification.
 
 - Symbolic Permissions: Setting file permissions using symbolic notation (u=rw,g=r,o=r) instead of the traditional octal (0644).
 
@@ -35,7 +35,7 @@ Key Concepts Demonstrated:
 
 - Variables: Using the `target_dir` and `target_fp` variables to define the file path dynamically.
 
-- Lookup Plugin: Using `ansible.builtin.file` (via the `lookup` function) to read the file's content back to the control node for verification.
+- Slurp: SLURP is a module that executes remotely, reads the file, and transfers the content (Base64 encoded) back to the Control Node's memory for use in subsequent tasks. Slurp is required because Lookup Plugins only access the Control Node's filesystem.
 
 - Templating: Renders the system_facts_template.j2 file
 

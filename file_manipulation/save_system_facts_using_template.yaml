@@ -19,6 +19,14 @@
         dest: "{{ target_fp }}"
         mode: u=rw,g=r,o=r
 
-    - name: Print the system fact file
+    - name: Read (slurp) the file content from the host
+      # SLURP fetches the file from the remote host and registers its content
+      # Using SLURP so the playbook can work with remote hosts
+      ansible.builtin.slurp:
+        src: "{{ target_fp }}"
+      register: file_content_b64
+
+    - name: Print the file contents (Decoded)
       ansible.builtin.debug:
-        msg: "File contents: {{ lookup('ansible.builtin.file', target_fp) }}"
+        # Slurp returns content in Base64, so we must use the 'b64decode' filter
+        msg: "File Contents: {{ file_content_b64.content | b64decode }}"
