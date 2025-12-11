@@ -1,0 +1,32 @@
+- name: Create and deploy a web server from a template
+  hosts: localhost
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Install nginx
+      ansible.builtin.package:
+        name: nginx
+        state: present
+
+    - name: Create the nginx configuration file from the template
+      ansible.builtin.template:
+        src: nginx.conf.j2
+        dest: "/etc/nginx/conf.d/nginx.conf" # This should be /etc/nginx/sites-enabled/ for debian
+        mode: u=rw,g=r,o=r
+
+    - name: Create the index.html for the host from the template
+      ansible.builtin.template:
+        src: index.html.j2
+        dest: "/var/www/html/index.html"
+        mode: u=rw,g=r,o=r
+
+    - name: Restart the nginx server so it loads the new config file
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+    - name: Print the url
+      ansible.builtin.debug:
+        msg: "The web server is running! Visit http://{{ ansible_default_ipv4.address }}:80"
+      become: false

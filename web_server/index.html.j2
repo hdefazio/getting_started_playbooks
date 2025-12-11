@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Ansible Host Information</title>
+</head>
+<body>
+</body>
+<h1>Your Ansible host:</h1>
+<ul>
+    <li>Name: {{ ansible_hostname }}</li>
+    <li>OS: {{ ansible_distribution }} {{ ansible_distribution_version }}</li>
+    <li>Memory: {{ ansible_memfree_mb }} MB / {{ ansible_memtotal_mb }} MB</li>
+    <li>Python: {{ ansible_python_version }}</li>
+</ul>
+</html>
